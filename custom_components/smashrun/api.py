@@ -134,10 +134,10 @@ async def fetch_latest_run(client, token):
     resp = await client.get(f"{SMASHRUN_ACTIVITIES_URL}{token}")
     data = resp.json()
     activity_id = data[0]["activityId"]
-    vo2_resp = await client.get(
+    run_resp = await client.get(
         f"{SMASHRUN_RUN_BASE}{activity_id}{SMASHRUN_RUN_QUERY}{token}"
     )
-    run = vo2_resp.json()
+    run = run_resp.json()
     run["startDateTimeLocal"] = dt_util.parse_datetime(run["startDateTimeLocal"])
     return run
 
