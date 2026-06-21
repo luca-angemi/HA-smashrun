@@ -1,0 +1,20 @@
+{
+  "services": {
+	"get_latest_run": {
+		"service": "mdi:run"
+	}
+  },
+  "entity": {
+    "sensor": {
+      "activity_id": {
+        "default": "mdi:identifier"
+      },
+	   "vo2_max": {
+        "default": "mdi:cards-heart"
+      },
+	   "run_count": {
+        "default": "mdi:counter"
+      }
+    }
+  }
+}

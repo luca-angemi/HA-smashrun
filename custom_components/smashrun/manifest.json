@@ -1,0 +1,11 @@
+{
+  "domain": "smashrun",
+  "name": "Smashrun",
+  "codeowners": ["@luca-angemi"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "",
+  "iot_class": "cloud_polling",
+  "requirements": ["staticmap"],
+  "version": "0.1"
+}

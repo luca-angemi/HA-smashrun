@@ -1,0 +1,17 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "data": {
+                    "token": "Smashrun token"
+                }
+            }
+        }
+    },
+    "services": {
+        "get_latest_run": {
+            "description": "Get the latest run from Smashrun.",
+            "name": "Get Latest Run"
+        }
+    }
+}
