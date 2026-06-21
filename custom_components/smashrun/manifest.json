@@ -4,7 +4,7 @@
   "codeowners": ["@luca-angemi"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "",
+  "documentation": "https://github.com/luca-angemi/smashrun",
   "iot_class": "cloud_polling",
   "requirements": ["staticmap"],
   "version": "0.1"
