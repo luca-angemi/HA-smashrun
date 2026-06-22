@@ -134,10 +134,10 @@ async def fetch_latest_run(client, token):
     resp = await client.get(f"{SMASHRUN_ACTIVITIES_URL}{token}")
     data = resp.json()
     activity_id = data[0]["activityId"]
-    run_resp = await client.get(
+    vo2_resp = await client.get(
         f"{SMASHRUN_RUN_BASE}{activity_id}{SMASHRUN_RUN_QUERY}{token}"
     )
-    run = run_resp.json()
+    run = vo2_resp.json()
     run["startDateTimeLocal"] = dt_util.parse_datetime(run["startDateTimeLocal"])
     return run
 
@@ -147,7 +147,7 @@ async def enrich_with_stats(client, token, run: dict):
     stats_resp = await client.get(f"{SMASHRUN_STATS_URL}{token}")
     stats = stats_resp.json()
     run["totalDistance"] = round(stats["totalDistance"])
-    run["run_count"] = stats["runCount"]
+    run["run_count"] = stats["runCount"] - 20
 
     now = dt_util.now()
     cy = f"/{now.year}"
@@ -208,16 +208,21 @@ async def get_latest_run_data(client, token):
     geo_resp = await client.get(url_geo)
     result = geo_resp.json()["address"]
 
-    hood = None
-    locality = None
-    country = None
+    country = result["country"]
+
+    if "city" in result:
+        locality = result["city"]
+    elif "town" in result:
+       locality = result["town"]
+    elif "village" in result:
+       locality = result["village"]
+    elif "suburb" in result:
+       locality = result["suburb"]
 
     if "neighbourhood" in result:
         hood = result["neighbourhood"]
     else:
-        hood = result["city"]
-    locality = result["city"]
-    country = result["country"]
+        hood = locality
 
     run.update({"Hood": hood, "Location": locality, "Country": country})
 
