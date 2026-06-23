@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from .coordinator import SmashrunCoordinator
 from .service import async_setup_services
 
-PLATFORMS: list[Platform] = [Platform.IMAGE, Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.IMAGE, Platform.NUMBER, Platform.SENSOR]
 
 type SmashrunConfigEntry = ConfigEntry[SmashrunCoordinator]
 

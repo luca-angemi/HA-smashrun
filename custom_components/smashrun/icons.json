@@ -15,6 +15,11 @@
 	   "run_count": {
         "default": "mdi:counter"
       }
+    },
+    "number": {
+      "run_count_offset": {
+        "default": "mdi:counter"
+      }
     }
   }
 }

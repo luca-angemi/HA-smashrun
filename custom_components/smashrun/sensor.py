@@ -155,9 +155,13 @@ class SmashrunSensor(SmashrunEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType:
-        """Return the state."""
         data = self.coordinator.data
         try:
-            return data[self.entity_description.key]
+            value = data[self.entity_description.key]
+
+            if self.entity_description.key == "run_count":
+                return value - self.coordinator.run_count_offset
+
+            return value
         except (KeyError, TypeError, IndexError):
             return None

@@ -36,6 +36,7 @@ class SmashrunCoordinator(DataUpdateCoordinator):
         )
         self.client = create_async_httpx_client(hass, timeout=30)
         self.smashrun_token = config_entry.data.get(CONF_TOKEN)
+        self.run_count_offset = 0
 
     async def _async_update_data(self):
         """Fetch and process data from Smashrun API."""
