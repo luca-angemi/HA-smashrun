@@ -231,7 +231,7 @@ async def get_latest_run_data(client, token):
     else:
         hood = locality
 
-    run.update({"Hood": hood, "Location": locality, "Country": country})
+    run.update({"hood": hood, "location": locality, "country": country})
 
     return run
 
