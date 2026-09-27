@@ -123,6 +123,7 @@ SENSOR_TYPE_SMASHRUN: tuple[SensorEntityDescription, ...] = (
         name="Run Count",
         state_class=SensorStateClass.TOTAL_INCREASING,
         suggested_display_precision=0,
+        native_unit_of_measurement="runs",
     ),
     SensorEntityDescription(
         key="powerAverage",
