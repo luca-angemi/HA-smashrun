@@ -110,7 +110,7 @@ async def fetch_image_data(run: dict):
     m = StaticMap(
         1200,
         800,
-        url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png", # https://tile-a.openstreetmap.fr/hot/{z}/{x}/{y}.png
+        url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     )
     m.add_line(Line(route, "#3388ff", 6))
 
