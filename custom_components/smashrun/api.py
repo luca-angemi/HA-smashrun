@@ -103,14 +103,14 @@ async def fetch_image_data(run: dict):
     lats = values[idx["latitude"]]
     lons = values[idx["longitude"]]
 
-    route = [(lon, lat) for lon, lat in zip(lons, lats) if (lon, lat) != (-1.0, -1.0)]
+    route = [(lon, lat) for lon, lat in zip(lons, lats, strict=True) if (lon, lat) != (-1.0, -1.0)]
 
     start, finish = route[0], route[-1]
 
     m = StaticMap(
         1200,
         800,
-        url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png", # https://tile-a.openstreetmap.fr/hot/{z}/{x}/{y}.png
     )
     m.add_line(Line(route, "#3388ff", 6))
 
@@ -135,6 +135,30 @@ async def fetch_image_data(run: dict):
     run["map_image"] = buf.getvalue()
     run["map_image_last_updated"] = dt_util.now()
 
+def prepare_map_data(run: dict) -> None:
+    """Prepare route and kilometer markers for the frontend map."""
+    keys = run["recordingKeys"]
+    values = run["recordingValues"]
+
+    idx = {k: i for i, k in enumerate(keys)}
+
+    lats = values[idx["latitude"]]
+    lons = values[idx["longitude"]]
+
+    run["polyline"] = [
+        {"lat": lat, "lon": lon}
+        for lat, lon in zip(lats, lons, strict=True)
+        if (lat, lon) != (-1.0, -1.0)
+    ]
+
+    run["km_markers"] = [
+        {
+            "lat": mark["lat"],
+            "lon": mark["lon"],
+            "label": str(mark["distance"]),
+        }
+        for mark in compute_km_marks(run)
+    ]
 
 async def fetch_latest_run(client, token):
     """Fetch the most recent run data."""

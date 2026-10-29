@@ -15,6 +15,7 @@ from .api import (
     enrich_with_vo2,
     fetch_image_data,
     fetch_latest_run,
+    prepare_map_data,
 )
 from .const import DOMAIN
 
@@ -47,6 +48,7 @@ class SmashrunCoordinator(DataUpdateCoordinator):
         await enrich_with_vo2(run)
         await add_trailings(client, token, run)
         await fetch_image_data(run)
+        prepare_map_data(run)
         if self.data and run["map_image"] == self.data["map_image"]:
             run["map_image_last_updated"] = self.data["map_image_last_updated"]
         return run

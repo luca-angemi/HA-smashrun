@@ -1,6 +1,7 @@
 {
   "domain": "smashrun",
   "name": "Smashrun",
+  "categories": ["health_wellbeing"],
   "codeowners": ["@luca-angemi"],
   "config_flow": true,
   "dependencies": [],

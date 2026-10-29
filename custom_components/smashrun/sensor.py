@@ -154,15 +154,28 @@ async def async_setup_entry(
 class SmashrunSensor(SmashrunEntity, SensorEntity):
     """Smashrun Sensor."""
 
+    _unrecorded_attributes = frozenset({"polyline", "markers"})
+
     @property
     def native_value(self) -> StateType:
+        """Native value."""
         data = self.coordinator.data
         try:
             value = data[self.entity_description.key]
 
             if self.entity_description.key == "run_count":
                 return value - self.coordinator.run_count_offset
-
-            return value
-        except (KeyError, TypeError, IndexError):
+        except KeyError, TypeError, IndexError:
             return None
+        else:
+            return value
+
+    @property
+    def extra_state_attributes(self):
+        """Return entity attributes."""
+        if self.entity_description.key == "activityId":
+            return {
+                "polyline": self.coordinator.data.get("polyline"),
+                "markers": self.coordinator.data.get("km_markers"),
+            }
+        return None
